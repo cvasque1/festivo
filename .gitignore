@@ -3,6 +3,7 @@ __pycache__/
 
 # Distribution / packaging
 venv/
+.env
 
 # Spotipy tokens
 .spotify_caches
