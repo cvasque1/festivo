@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<h2>Hi {{spotify.me()["display_name"]}}, <small><a href="/sign_out">[sign out]<a/></small></h2>
+<h3>What festival lineup would you like to Festify?</h3>
+<a href="/recommendations">Coachella 2022</a><br/><br/>
+{% endblock %}
