@@ -1,0 +1,11 @@
+{% extends "recommendations.html" %}
+{% block title %}Playlist{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endblock %}

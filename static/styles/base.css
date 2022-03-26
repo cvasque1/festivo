@@ -1,0 +1,10 @@
+.header {
+	font-family: Raleway;
+	margin-left: 1.66%;
+	font-size: 2vw;
+	font-weight: 800;
+	text-transform: uppercase;
+	border-bottom: 2px solid #F1F1F1;
+	width: 30%;
+	padding-bottom: 1vw;
+}

@@ -25,12 +25,13 @@ Run app.py
 
 import os
 from time import time
-from flask import Flask, session, request, redirect, render_template, url_for
+from flask import Flask, session, request, redirect, render_template, url_for, flash
 from flask_session import Session
 from datetime import timedelta
 from dotenv import load_dotenv
 import spotipy
 import uuid
+import spotify_features as festify
 
 load_dotenv()
 
@@ -57,7 +58,7 @@ def index():
         session['uuid'] = str(uuid.uuid4())
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-currently-playing playlist-modify-private',
+    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
                                                 cache_handler=cache_handler, 
                                                 show_dialog=True)
 
@@ -115,59 +116,48 @@ def user():
 @app.route("/logout")
 def logout():
     session.pop("user", None)
+    flash("You have been logged out!", "info")
     return redirect(url_for("login"))
+
+
 
 
 
 
 @app.route("/recommendations", methods=["POST", "GET"])
 def recommendations():
-    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if request.method == "POST":
         term = request.form["term"]
-        return redirect(url_for("ranges", trm=term))
+        return redirect(url_for("display", trm=term))
     else:
         return render_template("recommendations.html")
 
 
-@app.route("/recommendations/<trm>")
-def ranges(trm):
-    return f"<h1>{trm}</h1>"
+@app.route("/recommendations/<trm>", methods=["POST", "GET"])
+def display(trm):
+    if request.method == "POST":
+        playlistName = request.form["nm"]
+        description = request.form["dp"]
+        festify.createRecommendedPlaylist(session["spotify"], session["recc"], pName=playlistName, pDesc=description)
+        flash(f"Your playlist, {playlistName}, has been made!", "info")
+        return render_template("display.html", art=session["art"])
+    else:
+        cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+        if not auth_manager.validate_token(cache_handler.get_cached_token()):
+            return redirect('/')
+            
+        spotify = spotipy.Spotify(auth_manager=auth_manager)
+        session["spotify"] = spotify
+        festify.getTopAndRelatedArtists(spotify, trm)
+        top_artists, related_artists = festify.getTopAndRelatedArtists(spotify, trm)
+        coachella_artists = festify.readCSVFile()
+        recommended_artists = festify.generateRecommendedArtists(top_artists, related_artists, coachella_artists)
+        session["recc"] = recommended_artists
+        art = [(x.image, x.name, y) for (x,y) in recommended_artists.items()]
+        session["art"] = art
 
-
-# @app.route('/playlists')
-# def playlists():
-#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-#         return redirect('/')
-
-#     spotify = spotipy.Spotify(auth_manager=auth_manager)
-#     return spotify.current_user_playlists()
-
-
-# @app.route('/currently_playing')
-# def currently_playing():
-#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-#         return redirect('/')
-#     spotify = spotipy.Spotify(auth_manager=auth_manager)
-#     track = spotify.current_user_playing_track()
-#     if not track is None:
-#         return track
-#     return "No track currently playing."
-
-
-# @app.route('/current_user')
-# def current_user():
-#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-#         return redirect('/')
-#     spotify = spotipy.Spotify(auth_manager=auth_manager)
-#     return spotify.current_user()
+        return render_template("display.html", art=art)
 
 
 '''
