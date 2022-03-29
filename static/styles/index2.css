@@ -1,0 +1,143 @@
+body {
+    color: #202C39;
+    font-size: 20px;
+    line-height: 1.6;
+    /* box-shadow: inset 0 0 100px hsla(0,0%,0%,.3); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+header {
+    position: relative;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 5%);
+    flex: 0 1 auto;
+    background-color: #202C39;
+}
+
+.Navigation__Link {
+    color: #f9f9f9;
+}
+
+header .Navigation .SignIn {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+
+section.AppPage {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    background-color: #ebebeb;
+    /* box-shadow: 10 0px 30px rgb(0 0 0 / 5%), -10 0px 30px rgb(0 0 0 / 5%); */
+    /* background-color: #f9f9f910; */
+}
+
+.AppPageContent {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    /* border: 3px solid red; */
+    box-shadow: 10px 0px 10px -10px rgb(0 0 0 / 5%), -10px 0px 10px -10px rgb(0 0 0 / 5%);
+}
+
+.AppPageContent h1 {
+    font-size: 2em;
+    padding-top: 150px;
+    margin-bottom: 0;
+}
+
+.AppPageContent h1 + p {
+    font-size: 1.2em;
+    padding-top: 100px;
+    margin-bottom: 0;
+}
+
+#name {
+    color: #EFA00B;
+}
+
+.AppPageContentFestivals {
+    width: 100%;
+    /* max-width; */
+}
+
+.AppPageContentFestivals ul {
+    margin: 25px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.FestivalItem {
+    position: relative;
+    height: 275px;
+    width: 275px;
+    border-radius: 10px;
+    box-shadow: 0 50px 100px -20px rgb(50 50 93 / 25%), 0 30px 60px -30px rgb(0 0 0 / 30%);
+    background:linear-gradient(168deg, #832232, #832232 60%, white 60%, white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FestivalItem:nth-of-type(2n) {
+    background:linear-gradient(168deg, #EFA00B, #EFA00B 60%, white 60%, white);
+}
+
+.FestivalItemLink {
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    /* box-shadow: 0 0 30px rgb(0 0 0 / 25%); */
+    box-shadow: 0 13px 9px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%);
+}
+
+.FestivalItemLink a {
+    text-decoration: none;
+    padding: .8em 1.3em;
+    border-radius: 50px;
+    color:#f9f9f9;
+    background-color: #832232;
+    cursor: pointer;
+    box-shadow: 0 2px 5px -1px rgb(50 50 93 / 25%), 0 1px 3px -1px rgb(0 0 0 / 30%);
+    transition: all 0.15s;
+}
+
+.FestivalItemLink a:hover {
+    background-color: #832222;
+}
+
+.FestivalItem:nth-of-type(2n) .FestivalItemLink a {
+    background-color: #EFA00B;
+
+}
+
+.AppPageContentFestivals .FestivalItemLink {
+    height: 90%;
+    width: 90%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+
+.FestivalImage {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://media-prd.coachella.com/content/seo_images/76/RN9URApNiGKO7oPxaDndNq8dG6v2f4FFYVSi6mZh.jpeg') ;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center
+
+}
+
+

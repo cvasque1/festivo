@@ -1,7 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_landing.html" %}
 {% block title %}Home Page{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="./static/styles/index1.css">
+{% endblock %}
 {% block content %}
-<h2>Welcome,</h2>
-<p>This is what the app does:</p>
-<p><a href="{{auth_url}}">Sign in</a></p>
+<section class="Homepage">
+    <h1 class="HomepageHeader__Title">Enhance your Festival Experience</h1>
+    <div class="HomepageContent">
+        <p class="HomepageContent__Description">Festify is a free Spotify-powered app that recommends you artists from <span class="CapContainer"><span id="cap">any*</span><span id="secret">that's cap</span></span> lineup based on your most listened-to artists.</p>
+        <a class="HomepageContent__SignIn" href="{{auth_url}}">Sign in with spotify</a>
+    </div>
+</section>
 {% endblock %}

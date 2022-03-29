@@ -1,24 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Display{% endblock %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for msg in messages %}
-                <p>{{msg}}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-<h2>Display</h2>
-{% for image, artist, index in art %}
-    <p><img src='{{image}}' height="100" /> Artist: {{artist}} {{index}}</p>
-{% endfor %}
-<h2></h2>
-<form action="#" method="post">
-    <p>Name:</p>
-    <p><input type="text" name="nm" /></p>
-    <p><input type="text" name="dp" /></p>
-    <!-- <textarea id="dp" name="dp"></textarea> -->
-    <p><input type="submit" value="submit"/></p>
-    
-</form>
+<section>
+    <h1>Coachella 2022</h1>
+    <p>Your Recommended Artists</p>
+    <ul>
+    {% for image, artist, index in art %}
+        <li>
+            <p><img src='{{image}}' height="100" /> Artist: {{artist}} {{index}}</p>
+        </li>
+    {% endfor %}  
+    </ul>
+</section>
+<section>
+    <h2>Dive into your recommended artists by creating a playlist!</h2>
+    <form action="#" method="post">
+        <label for="nm">Playlist Name:</label>
+        <input type="text" name="nm" />
+        <label for="dp">Playlist Description:</label>
+        <textarea id="story" name="dp" rows="5" cols="33"></textarea>
+        <button>Create Playlist</button>
+    </form>
+</section>
 {% endblock %}

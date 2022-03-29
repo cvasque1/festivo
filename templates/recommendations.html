@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Recommendations{% endblock %}
 {% block content %}
-<h2>Recommendations</h2>
-<p>Festify generates your recommended artists based on your top artists.</p>
-<p>Music tastes are ever changing, so you can generate your recommendations from different time ranges</p>
+<h1>Coachella 2022</h1>
+<p>Festify uses your top artists data from Spotify to generate a list of artists we think you might enjoy seeing at Coachella.</p>
 <form action="#" method="post">
-    <p>Please select the timespan for your recommendations:<br>
-    <input type="radio" name="term" id="option1" value="short_term"> Short </input><br>
-    <input type="radio" name="term" id="option2" value="medium_term"> Medium </input><br>
-    <input type="radio" name="term" id="option3" value="long_term"> Long </input><br>
-    <input type="radio" name="term" id="option3" value="all"> All </input><br>
+    <p>Please select the top artists timespan to use for your recommendations:<br>
+    <input type="radio" name="term" id="option1" value="short_term"> Last Month </input><br>
+    <input type="radio" name="term" id="option2" value="medium_term"> Last 6 Months </input><br>
+    <input type="radio" name="term" id="option3" value="long_term"> All Time </input>
+<!-- <br>
+    <input type="radio" name="term" id="option3" value="all"> All </input><br> -->
     </p>
     <button>Submit</button>
     <!-- <p><input type=submit value=Submit></p> -->
 </form>
 {% endblock %}
+
+
+
+

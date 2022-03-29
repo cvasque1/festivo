@@ -1,5 +1,11 @@
 {% extends "recommendations.html" %}
 {% block title %}Playlist{% endblock %}
+{% block header%}
+<nav>
+    <a href="/">Festify</a>
+    <a href="/sign_out">[sign out]<a/>
+</nav>
+{% endblock %}
 {% block content %}
 {% with messages = get_flashed_messages() %}
         {% if messages %}

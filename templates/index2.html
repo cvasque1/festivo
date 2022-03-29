@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="./static/styles/index2.css">
+{% endblock %}
 {% block content %}
-<h2>Hi {{spotify.me()["display_name"]}}, <small><a href="/sign_out">[sign out]<a/></small></h2>
-<h3>What festival lineup would you like to Festify?</h3>
-<a href="/recommendations">Coachella 2022</a><br/><br/>
+<h1>Welcome, <span id="name">{{spotify.me()["display_name"]}}</span>.</h1>
+<p>Choose which festival you would like to get artist recommendations for.</p>
+<div class="AppPageContentFestivals">
+    <ul>
+        <li class="FestivalItem">
+            <div class="FestivalItemLink">
+                <div class="FestivalImage"></div>
+                <a href='/recommendations'>Coachella 2022</a>
+            </div>
+        </li>
+    </ul>
+</div>
 {% endblock %}

@@ -1,10 +1,96 @@
-.header {
-	font-family: Raleway;
-	margin-left: 1.66%;
-	font-size: 2vw;
-	font-weight: 800;
-	text-transform: uppercase;
-	border-bottom: 2px solid #F1F1F1;
-	width: 30%;
-	padding-bottom: 1vw;
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	border: 0;
+	background-color: #f9f9f9;
+	font-family: 'Rubik','Roboto', sans-serif;
+}
+
+header {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    transition: background-color .3s;
+}
+
+header .Navigation {
+    padding: 0;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: content-box;
+    max-width: 1000px;
+    transition: padding .3s;
+}
+
+.Navigation__Link {
+    text-decoration: none;
+    color: #f9f9f9;
+}
+
+.Navigation__Link {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    padding: 24px 1em;
+    transition-duration: .3s;
+}
+
+.Navigation__Link.Highlight:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+body {
+    color: #202C39;
+    font-size: 20px;
+    line-height: 1.6;
+    /* box-shadow: inset 0 0 100px hsla(0,0%,0%,.3); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+header {
+    position: relative;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+    flex: 0 1 auto;
+    background-color: #202C39;
+}
+
+.Navigation__Link {
+    color: #f9f9f9;
+}
+
+header .Navigation .SignIn {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+
+section.AppPage {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    background-color: #ebebeb;
+    /* box-shadow: 10 0px 30px rgb(0 0 0 / 5%), -10 0px 30px rgb(0 0 0 / 5%); */
+    /* background-color: #f9f9f910; */
+}
+
+.AppPageContent {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    /* border: 3px solid red; */
+    box-shadow: 10px 0px 10px -10px rgb(0 0 0 / 5%), -10px 0px 10px -10px rgb(0 0 0 / 5%);
 }

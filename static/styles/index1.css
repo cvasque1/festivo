@@ -1,0 +1,114 @@
+body {
+    color: #f9f9f9;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+
+header .Navigation .SignOut {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+
+section.Homepage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 100vh;
+    background-image: radial-gradient(rgba(39,43,50,.9),rgba(17,19,22,.9)),url('../images/landing-background-3.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.HomepageHeader__Title {
+    width: 800px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.5em;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+ 
+h1, p, a {
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+.HomepageContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.HomepageContent__Description {
+    font-size: 1.1em;
+    max-width: 700px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.HomepageContent__SignIn {
+    text-decoration: none;
+    color: #fff;
+    padding: .8em 1.3em;
+    border-radius: 50px;
+    font-weight: 700;
+    border-color: #832232;
+    background-color: #832232;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgb(131 34 34 / 15%);
+    transition: all 0.15s;
+}
+
+.HomepageContent__SignIn:hover {
+    box-shadow: 0 10px 20px rgb(0 0 0 / 8%);
+    background-color: #832222;
+    transform: translateY(1px);
+}
+
+.SecretBlock {
+    border: 1px red solid;
+    padding: 15px 25px;
+    z-index: 2;
+    position: absolute;
+    align-self: flex-start;
+    margin-top: 350px;
+    margin-left: 245px;
+}
+
+.CapContainer {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#cap {
+    transition: all .15s;
+}
+
+#secret {
+    transition: all .15s;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    border-radius: 10px;
+    font-size: .5em;
+    margin-top: 35px;
+    visibility: hidden;
+    padding: 0 10px;
+}
+
+#cap:hover {
+    color: #EFA00B;
+}
+
+#cap:hover + #secret {
+    visibility: visible;
+    opacity: 1;
+    margin-bottom: -100px;
+
+    
+}
