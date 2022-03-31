@@ -23,6 +23,7 @@ Run app.py
         (will need to be updated in your Spotify app and SPOTIPY_REDIRECT_URI variable)
 """
 
+from concurrent.futures import thread
 import os
 from time import time
 from flask import Flask, session, request, redirect, render_template, url_for, flash
@@ -39,7 +40,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
-app.permanent_session_lifetime = timedelta(minutes=15)
+# app.permanent_session_lifetime = timedelta(minutes=15)
 Session(app)
 
 caches_folder = './.spotify_caches/'
@@ -51,6 +52,9 @@ def session_cache_path():
     return caches_folder + session.get('uuid')
 
 
+
+
+
 @app.route('/')
 def index():
     if not session.get('uuid'):
@@ -58,24 +62,72 @@ def index():
         session['uuid'] = str(uuid.uuid4())
 
     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
+    auth_manager = createSpotifyOAuth(cache_handler)
+
+    if auth_manager.validate_token(cache_handler.get_cached_token()):
+        # Redirect to homepage if token
+        # spotify = spotipy.Spotify(auth_manager=auth_manager)
+        return redirect(url_for("homepage"))
+        # return render_template("index2.html", spotify=spotify)
+
+    # The sign in buttons on frontend will redirect to auth_url
+    auth_url = auth_manager.get_authorize_url()
+    return render_template("index1.html", auth_url=auth_url)
+
+
+@app.route('/authorize')
+def authorize():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = createSpotifyOAuth(cache_handler)
+    auth_manager.get_access_token(request.args.get("code"))
+
+    return redirect(url_for("homepage"))
+
+
+@app.route('/home')
+def homepage():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = createSpotifyOAuth(cache_handler)
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+
+    return render_template("index2.html", spotify=spotify)
+
+
+
+def createSpotifyOAuth(cache_handler):
+    return spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
                                                 cache_handler=cache_handler, 
                                                 show_dialog=True)
+                  
+    
 
-    if request.args.get("code"):
-        # Step 3. Being redirected from Spotify auth page
-        auth_manager.get_access_token(request.args.get("code"))
-        return redirect('/')
 
-    if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        # Step 2. Display sign in link when no token
-        auth_url = auth_manager.get_authorize_url()
-        # return render_template("index1.html")
-        return render_template("index1.html", auth_url=auth_url)
 
-    # Step 4. Signed in, display data
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    return render_template("index2.html", spotify=spotify)
+# @app.route('/')
+# def index():
+#     if not session.get('uuid'):
+#         # Step 1. Visitor is unknown, give random ID
+#         session['uuid'] = str(uuid.uuid4())
+
+#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+#     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
+#                                                 cache_handler=cache_handler, 
+#                                                 show_dialog=True)
+
+#     if request.args.get("code"):
+#         # Step 3. Being redirected from Spotify auth page
+#         auth_manager.get_access_token(request.args.get("code"))
+#         return redirect('/')
+
+#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
+#         # Step 2. Display sign in link when no token
+#         auth_url = auth_manager.get_authorize_url()
+#         # return render_template("index1.html")
+#         return render_template("index1.html", auth_url=auth_url)
+
+#     # Step 4. Signed in, display data
+#     spotify = spotipy.Spotify(auth_manager=auth_manager)
+#     return render_template("index2.html", spotify=spotify)
 
 
 @app.route('/sign_out')
@@ -136,5 +188,6 @@ Following lines allow application to be run more conveniently with
 (Also includes directive to leverage pythons threading capacity.)
 '''
 if __name__ == '__main__':
-    app.run(threaded=True, port=int(os.environ.get("PORT",
-                                                   os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
+    app.run(thread=True, port=8080)
+    # app.run(threaded=True, port=int(os.environ.get("PORT",
+    #                                                os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))

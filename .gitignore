@@ -7,3 +7,8 @@ venv/
 
 # Spotipy tokens
 .spotify_caches
+.cache
+.caches
+
+# Flask sessions
+.flask_session
