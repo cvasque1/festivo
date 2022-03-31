@@ -9,31 +9,14 @@ body {
     height: 100%;
 }
 
-header {
-    position: relative;
-    box-shadow: 0 10px 30px rgb(0 0 0 / 5%);
-    flex: 0 1 auto;
-    background-color: #202C39;
-}
-
 .Navigation__Link {
     color: #f9f9f9;
 }
 
-header .Navigation .SignIn {
-    position: absolute;
-    visibility: hidden;
-    z-index: -1;
-}
-
-section.AppPage {
-    width: 100%;
-    flex: 1 1 auto;
-    display: flex;
-    justify-content: center;
-    background-color: #ebebeb;
-    /* box-shadow: 10 0px 30px rgb(0 0 0 / 5%), -10 0px 30px rgb(0 0 0 / 5%); */
-    /* background-color: #f9f9f910; */
+.AppPageContentImage {
+    background: linear-gradient(172deg, transparent, transparent 70%, #f9f9f9 60%, #f9f9f9), url("../images/homepage_background.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .AppPageContent {
@@ -48,15 +31,17 @@ section.AppPage {
 }
 
 .AppPageContent h1 {
-    font-size: 2em;
-    padding-top: 150px;
-    margin-bottom: 0;
+    font-size: 2.5em;
+    /* padding-top: 10px; */
+    margin: 0 20px;
 }
 
 .AppPageContent h1 + p {
     font-size: 1.2em;
-    padding-top: 100px;
+    padding-top: 40px;
+    margin: 0 20px;
     margin-bottom: 0;
+    text-align: center;
 }
 
 #name {
@@ -65,6 +50,9 @@ section.AppPage {
 
 .AppPageContentFestivals {
     width: 100%;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
     /* max-width; */
 }
 
@@ -77,6 +65,7 @@ section.AppPage {
 }
 
 .FestivalItem {
+    text-decoration: none;
     position: relative;
     height: 275px;
     width: 275px;
@@ -86,6 +75,18 @@ section.AppPage {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition-duration: .5s;
+
+}
+
+.FestivalItem:hover {
+    box-shadow: 0 50px 100px -20px rgb(50 50 93 / 40%), 0 30px 60px -30px rgb(0 0 0 / 50%);
+    transform: translateY(-3px);
+    background:linear-gradient(168deg, #832232, #832232 60%, white 60%, white);
+}
+
+.FestivalItemLink:hover > .FestivalName {
+    background-color: #832232;
 }
 
 .FestivalItem:nth-of-type(2n) {
@@ -99,7 +100,7 @@ section.AppPage {
     box-shadow: 0 13px 9px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%);
 }
 
-.FestivalItemLink a {
+.FestivalName {
     text-decoration: none;
     padding: .8em 1.3em;
     border-radius: 50px;
@@ -110,7 +111,7 @@ section.AppPage {
     transition: all 0.15s;
 }
 
-.FestivalItemLink a:hover {
+.FestivalName:hover {
     background-color: #832222;
 }
 
@@ -119,7 +120,7 @@ section.AppPage {
 
 }
 
-.AppPageContentFestivals .FestivalItemLink {
+.FestivalItemLink {
     height: 90%;
     width: 90%;
     padding: 15px;
@@ -140,4 +141,40 @@ section.AppPage {
 
 }
 
+.DeveloperMessage {
+    font-size: .5em;
+    text-align: center;
+}
 
+
+@media (max-width: 800px) {
+    .AppPageContentImage {
+        height: 234px;
+    }
+
+    .AppPageContent h1 {
+        font-size: 1.65em;
+        /* margin: 0; */
+    }
+
+    .AppPageContent h1 + p {
+        font-size: .8em;
+    }
+
+    .FestivalItem {
+        width: 200px;
+        height: 200px;
+    }
+
+    .FestivalName {
+        font-size: 12px;
+        padding: 0.5em 0.8em;
+    }
+}
+
+@media (max-width: 800px) and (max-height: 950px) {
+    .AppPageContentFestivals {
+        margin-top: 5%;
+    }
+    
+}

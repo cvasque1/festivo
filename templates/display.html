@@ -1,25 +1,54 @@
 {% extends "base.html" %}
 {% block title %}Display{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename="styles/display.css")}}">
+<style>
+#{{termName}} {
+    color:#EFA00B;
+    text-decoration: underline 3px;
+    text-underline-offset: 4px;
+}
+</style>
+{% endblock %}
 {% block content %}
-<section>
-    <h1>Coachella 2022</h1>
-    <p>Your Recommended Artists</p>
-    <ul>
-    {% for image, artist, index in art %}
-        <li>
-            <p><img src='{{image}}' height="100" /> Artist: {{artist}} {{index}}</p>
-        </li>
-    {% endfor %}  
-    </ul>
+<section class="AppPageContentDisplay">
+    <div class="AppPageContentDisplay__Title">
+        <p>Your</p>
+        <h1>Coachella <span id="Year">2022</span></h1>
+        <p>Recommended Artists</p>
+    </div>
+    <div class="AppPageContentDisplay__Form">
+        <form class="RangeSelector" method="post">
+            <button class="RangeOption" id="shortTerm" name="timeRange" value="shortTerm">Last Month</button>
+            <button class="RangeOption" id="medTerm" name="timeRange" value="medTerm">Last 6 Month</button>
+            <button class="RangeOption" id="longTerm" name="timeRange" value="longTerm">All Time</button>
+            <input class="Indicator" type="text" name="indicator" value="1">
+        </form>
+        <p id="TopArtistMessage">Top Artist</p>
+    </div>
+    <div class="AppPageContentDisplayArtists">
+        <ul class="AllArtists"> 
+        {% for image, artist, index, uri in term %}
+            {% if index == 100 %}
+                <a class="ArtistItem TopArtist" href="{{uri}}">
+            {% else %}
+                <a class="ArtistItem" href="{{uri}}">
+            {% endif %}
+                    <div class="ArtistItemBlock">
+                        <div class="ArtistImage" style="background-image: url({{image}});"></div>
+                        <div class="ArtistNameContainer">
+                            <p class="ArtistName">{{artist}}</p>
+                        </div>
+                    </div>  
+                </a>
+        {% endfor %}  
+        </ul>
+    </div>    
 </section>
-<section>
-    <h2>Dive into your recommended artists by creating a playlist!</h2>
-    <form action="#" method="post">
-        <label for="nm">Playlist Name:</label>
-        <input type="text" name="nm" />
-        <label for="dp">Playlist Description:</label>
-        <textarea id="story" name="dp" rows="5" cols="33"></textarea>
-        <button>Create Playlist</button>
+<section class="AppPageContentPlaylist">
+    <form class="PlaylistGenerator" method="post">
+        <input class="Indicator" type="text" name="indicator" value="2" style="visibility: hidden;">
+        <button class="PlaylistGenerator__Button">Create Playlist</button>
     </form>
 </section>
 {% endblock %}

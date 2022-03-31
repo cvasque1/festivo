@@ -17,18 +17,18 @@ section.Homepage {
     justify-content: space-evenly;
     align-items: center;
     min-height: 100vh;
-    background-image: radial-gradient(rgba(39,43,50,.9),rgba(17,19,22,.9)),url('../images/landing-background-3.jpg');
+    background-image: radial-gradient(rgba(39,43,50,.9),rgba(17,19,22,.9)),url('../images/landing_background.jpg');
     background-position: center;
     background-size: cover;
 }
 
 .HomepageHeader__Title {
-    width: 800px;
+    max-width: 800px;
     text-align: center;
     font-weight: 700;
     font-size: 2.5em;
     margin: 0 auto;
-    padding-top: 100px;
+    padding: 100px 20px 0;
 }
  
 h1, p, a {
@@ -46,11 +46,12 @@ h1, p, a {
 .HomepageContent__Description {
     font-size: 1.1em;
     max-width: 700px;
-    margin-bottom: 30px;
+    margin: 0 20px;
     text-align: center;
 }
 
 .HomepageContent__SignIn {
+    margin-top: 30px;
     text-decoration: none;
     color: #fff;
     padding: .8em 1.3em;
@@ -109,6 +110,35 @@ h1, p, a {
     visibility: visible;
     opacity: 1;
     margin-bottom: -100px;
+}
 
-    
+
+@media (max-width: 600px) {
+    .HomepageHeader__Title {
+        font-size: 2em;
+    }
+
+    .HomepageContent {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .HomepageHeader__Title {
+        font-size: 1.6em;
+    }
+
+    .HomepageContent {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .HomepageHeader__Title {
+        font-size: 1.4em;
+    }
+
+    .HomepageContent {
+        font-size: 14px;
+    }
 }

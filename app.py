@@ -89,41 +89,45 @@ def sign_out():
     return redirect('/')
 
 
-@app.route("/recommendations", methods=["POST", "GET"])
-def recommendations():
+@app.route("/display", methods=["POST", "GET"])
+def display():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    session["spotify"] = spotify
+
+    top_artists_lst, related_artists_lst = festify.getTopAndRelatedArtists(spotify)
+    coachella_artists = festify.readCSVFile()
+    recommended_artists_lst = festify.generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists)
+    session["recc"] = recommended_artists_lst
+    session["shortTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[0].items()]
+    session["medTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[1].items()]
+    session["longTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[2].items()]
+
+    return redirect(url_for("allTimeRanges", timeRange="shortTerm"))
+
+
+
+@app.route("/display/<timeRange>", methods=["POST", "GET"])
+def allTimeRanges(timeRange):
     if request.method == "POST":
-        term = request.form["term"]
-        return redirect(url_for("display", trm=term))
+        indicator = int(request.form["indicator"])
+        if indicator == 1:
+            timeRange = request.form["timeRange"]
+            return redirect(url_for("allTimeRanges", timeRange=timeRange))
+        else:
+            if timeRange == "shortTerm":
+                festify.createRecommendedPlaylist(session["spotify"], session["recc"][0], timeRange)
+            elif timeRange == "medTerm":
+                festify.createRecommendedPlaylist(session["spotify"], session["recc"][1], timeRange)
+            else:
+                festify.createRecommendedPlaylist(session["spotify"], session["recc"][2], timeRange)
+            flash("Your playlist has successfully been created!")
+            return redirect(url_for("allTimeRanges", timeRange=timeRange))
     else:
-        return render_template("recommendations.html")
-
-
-@app.route("/recommendations/<trm>", methods=["POST", "GET"])
-def display(trm):
-    if request.method == "POST":
-        playlistName = request.form["nm"]
-        description = request.form["dp"]
-        festify.createRecommendedPlaylist(session["spotify"], session["recc"], pName=playlistName, pDesc=description)
-        flash(f"Your playlist, {playlistName}, has been made!", "info")
-        return render_template("display.html", art=session["art"])
-    else:
-        cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-        auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
-        if not auth_manager.validate_token(cache_handler.get_cached_token()):
-            return redirect('/')
-            
-        spotify = spotipy.Spotify(auth_manager=auth_manager)
-        session["spotify"] = spotify
-
-        top_artists, related_artists = festify.getTopAndRelatedArtists(spotify, trm)
-        coachella_artists = festify.readCSVFile()
-        recommended_artists = festify.generateRecommendedArtists(top_artists, related_artists, coachella_artists)
-        session["recc"] = recommended_artists
-        art = [(x.image, x.name, y) for (x,y) in recommended_artists.items()]
-        session["art"] = art
-
-        return render_template("display.html", art=art)
-
+        return render_template("display.html", term=session[timeRange], termName=timeRange)
 
 
 '''

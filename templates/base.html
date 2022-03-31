@@ -3,10 +3,11 @@
 <head>
     <title>{% block title %}{% endblock%}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:;base64,=">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,600;0,700;1,400;0,600,1,700" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename="styles/base.css")}}">
     {% block styles %}
     {% endblock %}
@@ -22,9 +23,28 @@
     
     <section class="AppPage">
         <div class="AppPageContent">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes id="flashMessage">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>  
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <div class="AppPageContentImage"></div>
             {% block content %}
             {% endblock %}
         </div>
     </section>
+
+    <script>
+        setTimeout(function() {
+            var loader = document.getElementById("flashMessage");
+            loader.style.transition = '.5s';
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+          }, 2000);
+    </script>
 </body>
 </html>

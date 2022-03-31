@@ -12,10 +12,17 @@ body, html {
 }
 
 header {
-    position: fixed;
+    position: absolute;
     z-index: 2;
     width: 100%;
     transition: background-color .3s;
+    flex: 0 1 auto;
+}
+
+header .Navigation .SignIn {
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
 }
 
 header .Navigation {
@@ -31,20 +38,32 @@ header .Navigation {
 
 .Navigation__Link {
     text-decoration: none;
-    color: #f9f9f9;
-}
-
-.Navigation__Link {
     display: flex;
     align-self: stretch;
     align-items: center;
     padding: 24px 1em;
     transition-duration: .3s;
+    color: #202C39;
+    margin: 0 20px;
 }
 
 .Navigation__Link.Highlight:hover {
     background: rgba(0, 0, 0, 0.25);
 }
+
+.flashes {
+    padding: .75em 1.5em;
+    position: absolute;
+    list-style: none;
+    z-index: 3;
+    text-align: center;
+    margin: 36px;
+    background: radial-gradient(rgba(32,43,57,.8),rgba(32,44,57,1));
+    color: #f9f9f9;
+    border-radius: 25px;
+}
+
+
 
 body {
     color: #202C39;
@@ -55,23 +74,6 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100%;
-}
-
-header {
-    position: relative;
-    box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
-    flex: 0 1 auto;
-    background-color: #202C39;
-}
-
-.Navigation__Link {
-    color: #f9f9f9;
-}
-
-header .Navigation .SignIn {
-    position: absolute;
-    visibility: hidden;
-    z-index: -1;
 }
 
 section.AppPage {
@@ -93,4 +95,10 @@ section.AppPage {
     background-color: #f9f9f9;
     /* border: 3px solid red; */
     box-shadow: 10px 0px 10px -10px rgb(0 0 0 / 5%), -10px 0px 10px -10px rgb(0 0 0 / 5%);
+}
+
+.AppPageContentImage {
+    height: 334px;
+    width: 100%;
+    position: relative;
 }

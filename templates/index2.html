@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
 {% block styles %}
-<link rel="stylesheet" href="./static/styles/index2.css">
+<link rel="stylesheet" href="{{url_for('static', filename="styles/index2.css")}}">
 {% endblock %}
 {% block content %}
 <h1>Welcome, <span id="name">{{spotify.me()["display_name"]}}</span>.</h1>
 <p>Choose which festival you would like to get artist recommendations for.</p>
 <div class="AppPageContentFestivals">
     <ul>
-        <li class="FestivalItem">
+        <a class="FestivalItem" href='/display'>
             <div class="FestivalItemLink">
                 <div class="FestivalImage"></div>
-                <a href='/recommendations'>Coachella 2022</a>
+                <p class="FestivalName">Coachella 2022</p>
             </div>
-        </li>
+        </a>
     </ul>
+    <p class="DeveloperMessage">*App under construction. Initial loading may take around 15 seconds.</p>
 </div>
 {% endblock %}

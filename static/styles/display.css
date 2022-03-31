@@ -1,0 +1,376 @@
+.Navigation__Link {
+    color: #202C39;
+}
+
+.AppPageContentImage {
+    background: linear-gradient(172deg, transparent, transparent 70%, #f9f9f9 60%, #f9f9f9), url("../images/coachella_background.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.AppPageContentDisplay p {
+    font-weight: 600;
+}
+
+.AppPageContentDisplay__Title {
+    display: flex;
+    flex-direction: column;
+}
+
+.AppPageContentDisplay__Title > * {
+    margin: 0;
+}
+
+.AppPageContentDisplay__Title p {
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+.AppPageContentDisplay__Title p:first-child {
+    align-self: flex-start;
+    position: absolute;
+    padding-left: 15px;;
+}
+
+.AppPageContentDisplay__Title p:last-child {
+    align-self: end;
+    position: absolute;
+    margin-top: 95px;;
+    padding-right: 15px;;
+}
+
+.AppPageContentDisplay__Title h1 {
+    font-size: 3em;
+    margin-top: 15px;
+}
+
+#Year {
+    color:#EFA00B
+}
+
+.AppPageContentDisplay, .AppPageContentPlaylist {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.AppPageContentDisplay__Form {
+    margin-top: 80px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Indicator {
+    visibility: hidden;
+    padding: 0;
+    margin: 0;
+    height: 0;
+    width: 0;
+}
+
+.RangeOption {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 1em 1em;
+    position: relative;
+    color:#202C39;
+    font-weight: 700;
+    font-size: .9em;
+    text-decoration: underline 3px transparent;
+    text-underline-offset: 4px;
+    transition: all .15s;
+}
+
+#TopArtistMessage {
+    display: flex;
+    align-items: center;
+    color: #EFA00B;
+    font-size: .6em;
+    margin-right: 10px;
+}
+
+#TopArtistMessage:before {
+    content: '';
+    display: inline-block;
+    width: .4em;
+    height: .4em;
+    background: #EFA00B;
+    margin-right: 5px;;
+}
+
+.AppPageContentDisplayArtists {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.AllArtists {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: center;
+}
+
+.ArtistBlock {
+    display: flex;
+    flex-direction: column;
+}
+  
+  
+.ranges {
+    width: 100%;
+    font-size: 12px;
+    display: flex;
+    align-items: space-evenly;
+}
+  
+.term ul {
+    list-style: none;
+}
+
+.ArtistItem {
+    text-decoration: none;
+    position: relative;
+    height: 285px;
+    width: 200px;
+    margin: 20px 20px;
+    border-radius: 10px;
+    box-shadow: 0 50px 100px -20px rgb(50 50 93 / 25%), 0 30px 60px -30px rgb(0 0 0 / 30%);
+    background:linear-gradient(168deg, #832232, #832232 60%, white 60%, white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-duration: .5s;
+}
+
+.ArtistItem.TopArtist {
+    background:linear-gradient(168deg, #EFA00B, #EFA00B 60%, white 60%, white);
+}
+
+.ArtistItemBlock {
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    /* box-shadow: 0 0 30px rgb(0 0 0 / 25%); */
+    box-shadow: 0 13px 9px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%);
+}
+
+.ArtistItemBlock {
+    height: 90%;
+    width: 90%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+
+.ArtistImage {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-image: url('https://media-prd.coachella.com/content/seo_images/76/RN9URApNiGKO7oPxaDndNq8dG6v2f4FFYVSi6mZh.jpeg') ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ArtistNameContainer {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.ArtistName {
+    min-width: 170px;
+    text-align: center;
+    margin: 0;
+    text-decoration: none;
+    padding: .4em 8px;
+    border-radius: 50px;
+    color:#f9f9f9;
+    background-color: #832232;
+    cursor: pointer;
+    box-shadow: 0 2px 5px -1px rgb(50 50 93 / 25%), 0 1px 3px -1px rgb(0 0 0 / 30%);
+    transition: all 0.15s;
+    font-size: .8em;
+}
+
+.ArtistItem.TopArtist .ArtistName {
+    background-color: #EFA00B;
+}
+
+.PlaylistGenerator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    height: 100px;
+    width: 100%;
+}
+
+.PlaylistGenerator__Button {
+    height: 90%;
+    font-size: 1.6em;
+    text-decoration: none;
+    color: #fff;
+    padding: .8em 1.3em;
+    border-radius: 50px;
+    font-weight: 700;
+    border-color: #202C39;
+    background-color: #202C39;
+    cursor: pointer;
+    box-shadow: 0 13px 9px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%);
+    transition: all 0.15s;
+}
+
+.PlaylistGenerator__Button:hover {
+    box-shadow: 0 10px 20px rgb(131 34 34 / 15%);
+    background-color: #222f3d;
+    transform: translateY(1px);
+}
+
+
+@media (max-width: 920px) {
+    .ArtistItem {
+        height: 207px;
+        width: 145px;
+    }
+
+    .ArtistImage {
+        width: 108.75px;
+        height: 108.75px;
+    }
+
+    .ArtistName {
+        min-width: 123.25px;
+        font-size: .55em;
+    }
+}
+
+
+@media (max-width: 560px) { /* mobile mode */
+    .AppPageContentImage {
+        height: 234px;
+    }
+
+    .AppPageContentDisplay__Title p {
+        font-size: 0.9em;
+    }
+
+    .AppPageContentDisplay__Title p:last-child {
+        margin-top: 75px;
+    }
+
+    .AppPageContentDisplay__Title h1 {
+        font-size: 2.5em;
+        margin-top: 10px;
+    }
+
+    .AppPageContentDisplay__Form {
+        margin-top: 50px;
+        flex-direction: column;
+    }
+
+    .RangeOption {
+        font-size: .7em;
+    }
+
+    #TopArtistMessage {
+        font-size: .4em;
+        margin: 0 10px;
+        align-self: flex-end;
+    }
+
+    #TopArtistMessage:before {
+        content: '';
+        display: inline-block;
+        width: 0.6em;
+        height: 0.6em;
+        background: #EFA00B;
+        margin-right: 5px;
+    }
+
+    .AllArtists {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .ArtistItem {
+        margin: 0;
+        height: 105px;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .ArtistItem, .ArtistItem.TopArtist {
+        background: none;
+        box-shadow: none;
+    }
+
+    .ArtistItemBlock {
+        max-width: 380px;
+        flex-direction: row;
+        background: linear-gradient(98deg, #832232, #832232 17.5%, white 17.5%, white);
+    }
+
+    .TopArtist > .ArtistItemBlock {
+        background: linear-gradient(98deg, #EFA00B, #EFA00B 17.5%, white 17.5%, white)
+    }
+
+    .ArtistNameContainer {
+        align-self: center;
+    }
+
+    .ArtistImage {
+        width: 75px;
+        height: 75px;
+        border-radius: 10px;
+    }
+    
+    .ArtistName {
+        width: 100%;
+        margin-left: 30px;
+        font-size: .7em;
+    }
+
+    .PlaylistGenerator__Button {
+        font-size: 1.2em;
+        padding: .8em 1.6em;
+    }
+}
+
+
+@media (max-width: 400px) { /* mobile mode */
+    .AppPageContentDisplay__Title p {
+        font-size: 0.7em;
+    }
+
+    .AppPageContentDisplay__Title h1 {
+        font-size: 1.8em;
+        margin-top: 8px;
+    }
+
+    .AppPageContentDisplay__Title p:last-child {
+        margin-top: 55px;
+    }
+
+    .RangeOption {
+        font-size: .60em;
+    }
+
+    .flashes {
+        margin: 72px 36px 36px;
+    }
+}

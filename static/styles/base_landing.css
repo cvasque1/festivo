@@ -31,17 +31,16 @@ header .Navigation {
 
 .Navigation__Link {
     text-decoration: none;
-    color: #f9f9f9;
-}
-
-.Navigation__Link {
     display: flex;
     align-self: stretch;
     align-items: center;
     padding: 24px 1em;
     transition-duration: .3s;
+    color: #f9f9f9;
+    margin: 0 20px;
 }
 
 .Navigation__Link.Highlight:hover {
     background: rgba(0, 0, 0, 0.25);
 }
+

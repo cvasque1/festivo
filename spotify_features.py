@@ -52,7 +52,7 @@ def userTermInput():
     return int(rangeIn)
 
 
-def getTopAndRelatedArtists(sp, term):
+def getTopAndRelatedArtists(sp):
     """Call to access users top and related artists based on user specififed range
 
     Parameters
@@ -69,24 +69,35 @@ def getTopAndRelatedArtists(sp, term):
     """
     # rangeIn = userTermInput()
     # ranges = {1:'short_term', 2:'medium_term', 3:'long_term'}
-    if term in ['short_term', 'medium_term', 'long_term']:
-    # if rangeIn in [1,2,3]:
-        top_artists_json = sp.current_user_top_artists(time_range=term, limit=50)
+    top_artists_lst = []
+    related_artists_lst = []
+
+    for timeRange in ['short_term', 'medium_term', 'long_term']:
+        top_artists_json = sp.current_user_top_artists(time_range=timeRange, limit=50)
         top_artists, related_artists = accessTopandRelatedArtists(sp, top_artists_json)
-    else: # rangeIn == 4
-        top_artists = []
-        related_artists = {}
-        for values in ['short_term', 'medium_term', 'long_term']:
-            top_artists_json = sp.current_user_top_artists(time_range=values, limit=50)
-            top, related = accessTopandRelatedArtists(sp, top_artists_json)
-            top_artists += top
-            related_artists.update(related)
+        top_artists_lst.append(top_artists)
+        related_artists_lst.append(related_artists)
 
-        top_artists = set(top_artists)
 
-    related_artists = {k : v for k, v in sorted(related_artists.items(), key=lambda item: item[1], reverse=True)}
 
-    return top_artists, related_artists
+    # if term in ['short_term', 'medium_term', 'long_term']:
+    # # if rangeIn in [1,2,3]:
+    #     top_artists_json = sp.current_user_top_artists(time_range=term, limit=50)
+    #     top_artists, related_artists = accessTopandRelatedArtists(sp, top_artists_json)
+    # else: # rangeIn == 4
+    #     top_artists = []
+    #     related_artists = {}
+    #     for values in ['short_term', 'medium_term', 'long_term']:
+    #         top_artists_json = sp.current_user_top_artists(time_range=values, limit=50)
+    #         top, related = accessTopandRelatedArtists(sp, top_artists_json)
+    #         top_artists += top
+    #         related_artists.update(related)
+    #     top_artists = set(top_artists)
+
+    # for i in range(len(related_artists_lst)):
+    #     related_artists_lst[i] = {k : v for k, v in sorted(related_artists_lst[i].items(), key=lambda item: item[1], reverse=True)}
+
+    return top_artists_lst, related_artists_lst
 
 
 def accessTopandRelatedArtists(sp, top_artists_json):
@@ -110,11 +121,11 @@ def accessTopandRelatedArtists(sp, top_artists_json):
     rel_artists = {}
 
     for i, item in enumerate(top_artists_json['items']):
-        top_artist = Artist(name=item['name'], _id=item['id'], genres=item['genres'], image=item['images'][0]['url'])
+        top_artist = Artist(name=item['name'], _id=item['id'], genres=item['genres'], image=item['images'][0]['url'], uri=item['uri'])
         top_artists.append(top_artist)
         related_artists = sp.artist_related_artists(top_artist._id)['artists']
         for j,rel_item in enumerate(related_artists):
-            rel_artist = Artist(name=rel_item['name'], _id=rel_item['id'], genres=rel_item['genres'], image=rel_item['images'][0]['url'])
+            rel_artist = Artist(name=rel_item['name'], _id=rel_item['id'], genres=rel_item['genres'], image=rel_item['images'][0]['url'], uri=rel_item['uri'])
             if rel_artist in rel_artists:
                 rel_artists[rel_artist] += 1
             else:
@@ -148,7 +159,7 @@ def readCSVFile():
     return coachella_artists
 
 
-def generateRecommendedArtists(top_artists, related_artists, coachella_artists):
+def generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists):
     """Generates recommended artists based on user's top artists and the festival artists
 
     Parameters
@@ -163,19 +174,24 @@ def generateRecommendedArtists(top_artists, related_artists, coachella_artists):
     recommended_artists : dic
         a dic of Class Artists and their match index
     """
-    recommended_artists = {}
-    related_artists_and_index = getArtistAndMatchIndex(related_artists)
-    top_artists_dic = getPopularArtists(top_artists)
-    top_match_index = 10
-    for artist in coachella_artists:
-        if artist in getArtistNames(related_artists):
-            recommended_artists[related_artists_and_index[artist][0]] = related_artists_and_index[artist][1]
-        elif artist in getArtistNames(top_artists):
-            recommended_artists[top_artists_dic[artist]] = top_match_index
+    recommended_artists_lst = []
+    for i in range(len(top_artists_lst)):
+        recommended_artists = {}
+        related_artists_and_index = getArtistAndMatchIndex(related_artists_lst[i])
+        top_artists_dic = getPopularArtists(top_artists_lst[i])
+        top_match_index = 100
+        for artist in coachella_artists:
+            if artist in getArtistNames(top_artists_lst[i]):
+                recommended_artists[top_artists_dic[artist]] = top_match_index
+            elif artist in getArtistNames(related_artists_lst[i]):
+                recommended_artists[related_artists_and_index[artist][0]] = related_artists_and_index[artist][1]
+            
+        recommended_artists_lst.append(recommended_artists)
     
-    recommended_artists = {k : v for k, v in sorted(recommended_artists.items(), key=lambda item: item[1], reverse=True)}
+    # for i in range(len(recommended_artists_lst)):
+    #     recommended_artists_lst[i] = {k : v for k, v in sorted(recommended_artists_lst[i].items(), key=lambda item: item[1], reverse=True)}
 
-    return recommended_artists
+    return recommended_artists_lst
 
 
 def getPopularArtists(artists):
@@ -301,10 +317,16 @@ def addTracksToPlaylist(sp, playlist, recc_top_tracks):
 #     pass
 
 
-def createRecommendedPlaylist(sp, recommended_artists, pName, pDesc):
-    # NOT FINISHED
+def createRecommendedPlaylist(sp, recommended_artists, term):
     recc_top_tracks = getRecommendedTopTracks(sp, recommended_artists) # list/set/dic of object Track
     # promptFinished("getting top recommended tracks")
+    timeRange = {
+        "shortTerm": "Last Month",
+        "medTerm": "Last 6 Months",
+        "longTerm": "All Time"
+    }
+    pName = f"Festify - Coachella 2022 Reccommended Artists - {timeRange[term]}"
+    pDesc = "Your recommended artists for Coachella 2022 generated by Festify!\n\nThis isn't all-inclusive but its a good place to start. :)"
     playlist = createPlaylist(sp, pName, pDesc) # object Playlist
     # promptFinished("creating playlist")
     addTracksToPlaylist(sp, playlist, recc_top_tracks)
