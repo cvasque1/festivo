@@ -2,9 +2,9 @@ import spotipy
 import sys
 import json
 import pandas as pd
-import Spotify_Classes as sc
+import festivo_classes as sc
 
-from Spotify_Classes import Artist
+from festivo_classes import Artist
 from collections import defaultdict
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth

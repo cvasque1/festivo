@@ -31,7 +31,7 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import spotipy
 import uuid
-import spotify_features as festify
+import festivo as festivo
 
 load_dotenv()
 
@@ -98,9 +98,9 @@ def display():
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     session["spotify"] = spotify
 
-    top_artists_lst, related_artists_lst = festify.getTopAndRelatedArtists(spotify)
-    coachella_artists = festify.readCSVFile()
-    recommended_artists_lst = festify.generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists)
+    top_artists_lst, related_artists_lst = festivo.getTopAndRelatedArtists(spotify)
+    coachella_artists = festivo.readCSVFile()
+    recommended_artists_lst = festivo.generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists)
     session["recc"] = recommended_artists_lst
     session["shortTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[0].items()]
     session["medTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[1].items()]
@@ -119,11 +119,11 @@ def allTimeRanges(timeRange):
             return redirect(url_for("allTimeRanges", timeRange=timeRange))
         else:
             if timeRange == "shortTerm":
-                festify.createRecommendedPlaylist(session["spotify"], session["recc"][0], timeRange)
+                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][0], timeRange)
             elif timeRange == "medTerm":
-                festify.createRecommendedPlaylist(session["spotify"], session["recc"][1], timeRange)
+                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][1], timeRange)
             else:
-                festify.createRecommendedPlaylist(session["spotify"], session["recc"][2], timeRange)
+                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][2], timeRange)
             flash("Your playlist has successfully been created!")
             return redirect(url_for("allTimeRanges", timeRange=timeRange))
     else:
