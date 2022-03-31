@@ -31,7 +31,7 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import spotipy
 import uuid
-import festivo as festivo
+import festivo_features as festivo
 
 load_dotenv()
 
