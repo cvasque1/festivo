@@ -7,7 +7,7 @@ body, html {
 	padding: 0;
 	height: 100%;
 	border: 0;
-	background-color: #f9f9f9;
+	background-color: rgba(39,43,50,.9);
 	font-family: 'Rubik','Roboto', sans-serif;
 }
 
