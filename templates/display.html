@@ -2,13 +2,6 @@
 {% block title %}Festivo | Display{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{{url_for('static', filename="styles/display.css")}}">
-<style>
-#{{termName}} {
-    color:#EFA00B;
-    text-decoration: underline 3px;
-    text-underline-offset: 4px;
-}
-</style>
 {% endblock %}
 {% block content %}
 <section class="AppPageContentDisplay">
@@ -18,17 +11,19 @@
         <p>Recommended Artists</p>
     </div>
     <div class="AppPageContentDisplay__Form">
-        <form class="RangeSelector" method="post">
-            <button class="RangeOption" id="shortTerm" name="timeRange" value="shortTerm">Last Month</button>
-            <button class="RangeOption" id="medTerm" name="timeRange" value="medTerm">Last 6 Month</button>
-            <button class="RangeOption" id="longTerm" name="timeRange" value="longTerm">All Time</button>
-            <input class="Indicator" type="text" name="indicator" value="1">
-        </form>
+        <div class='RangeSelector'>
+            <input type='radio' value='longTerm' name='range' id='longTerm' checked>
+            <label for='longTerm' class='RangeOption'>All Time</label>
+            <input type='radio' value='medTerm' name='range' id='medTerm'>
+            <label for='medTerm' class='RangeOption'>Last 6 Months</label>
+            <input type='radio' value='shortTerm' name='range' id='shortTerm'>
+            <label for='shortTerm' class='RangeOption'>Last Month</label>
+        </div>
         <p id="TopArtistMessage">Top Artist</p>
     </div>
     <div class="AppPageContentDisplayArtists">
         <ul class="AllArtists"> 
-        {% for image, artist, index, uri in term %}
+        {% for image, artist, index, uri in longTerm %}
             {% if index == 100 %}
                 <a class="ArtistItem TopArtist" href="{{uri}}">
             {% else %}
@@ -47,8 +42,74 @@
 </section>
 <section class="AppPageContentPlaylist">
     <form class="PlaylistGenerator" method="post">
-        <input class="Indicator" type="text" name="indicator" value="2" style="visibility: hidden;">
+        <input class="Indicator" type="text" name="playlistPointer" value="longTerm" style="visibility: hidden;">
         <button class="PlaylistGenerator__Button">Create Playlist</button>
     </form>
 </section>
+<script>
+    const ranges = document.querySelectorAll('input[name="range"]');
+    let artists = document.querySelector('.AllArtists');
+
+    ranges.forEach(range => {
+        range.addEventListener('click', function() {
+            removeAllChildren();
+            displayRecommendedArtists({{allRanges|tojson}}, this.value);
+            updatePlaylistGeneratorPointer(this.value);
+        });
+    });
+
+
+    function removeAllChildren() {
+        while (artists.firstChild) {
+            artists.removeChild(artists.firstChild);
+        }
+    }
+
+
+    function displayRecommendedArtists(allRanges, selectedRange) {        
+        for (let i = 0; i < allRanges[selectedRange].length; i++) {
+            createArtistItem(allRanges[selectedRange][i]);
+        }
+        artists.delay 
+    }
+
+
+    function createArtistItem(artist) {
+        let artistItem = document.createElement('a');
+        let artistItemBlock = document.createElement('div');
+        let artistImage = document.createElement('div');
+        let artistNameContainer = document.createElement('div');
+        let artistName = document.createElement('p');
+
+
+        artistItem.href = artist[3];
+        artistItem.classList.add('ArtistItem');
+        if (artist[2] == 100) {
+            artistItem.classList.add('TopArtist');
+        }
+
+        artistItemBlock.classList.add('ArtistItemBlock');
+
+        artistImage.classList.add('ArtistImage');
+        artistImage.style = `background-image: url(${artist[0]})`;
+
+        artistNameContainer.classList.add('ArtistNameContainer');
+
+        artistName.classList.add('ArtistName');
+        artistName.innerText = artist[1];
+
+        artistNameContainer.appendChild(artistName);
+        artistItemBlock.append(artistImage, artistNameContainer);
+        artistItem.appendChild(artistItemBlock);
+
+
+        artists.appendChild(artistItem);
+    }
+
+    
+    function updatePlaylistGeneratorPointer(selectedRange) {
+        const playlistPointer = document.querySelector('.Indicator');
+        playlistPointer.value = selectedRange;
+    }
+</script>
 {% endblock %}

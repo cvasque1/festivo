@@ -52,9 +52,6 @@ def session_cache_path():
     return caches_folder + session.get('uuid')
 
 
-
-
-
 @app.route('/')
 def index():
     if not session.get('uuid'):
@@ -93,42 +90,11 @@ def homepage():
     return render_template("index2.html", spotify=spotify)
 
 
-
 def createSpotifyOAuth(cache_handler):
     return spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
                                                 cache_handler=cache_handler, 
                                                 show_dialog=True)
                   
-    
-
-
-
-# @app.route('/')
-# def index():
-#     if not session.get('uuid'):
-#         # Step 1. Visitor is unknown, give random ID
-#         session['uuid'] = str(uuid.uuid4())
-
-#     cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
-#     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-top-read playlist-modify-public',
-#                                                 cache_handler=cache_handler, 
-#                                                 show_dialog=True)
-
-#     if request.args.get("code"):
-#         # Step 3. Being redirected from Spotify auth page
-#         auth_manager.get_access_token(request.args.get("code"))
-#         return redirect('/')
-
-#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
-#         # Step 2. Display sign in link when no token
-#         auth_url = auth_manager.get_authorize_url()
-#         # return render_template("index1.html")
-#         return render_template("index1.html", auth_url=auth_url)
-
-#     # Step 4. Signed in, display data
-#     spotify = spotipy.Spotify(auth_manager=auth_manager)
-#     return render_template("index2.html", spotify=spotify)
-
 
 @app.route('/sign_out')
 def sign_out():
@@ -153,33 +119,27 @@ def display():
     top_artists_lst, related_artists_lst = festivo.getTopAndRelatedArtists(spotify)
     coachella_artists = festivo.readCSVFile()
     recommended_artists_lst = festivo.generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists)
-    session["recc"] = recommended_artists_lst
-    session["shortTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[0].items()]
-    session["medTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[1].items()]
-    session["longTerm"] = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[2].items()]
+    shortTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[0].items()]
+    medTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[1].items()]
+    longTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[2].items()]
+    allRanges = {
+        'shortTerm' : shortTerm,
+        'medTerm' : medTerm,
+        'longTerm' : longTerm
+    }
+    session["allRanges"] = allRanges
 
-    return redirect(url_for("allTimeRanges", timeRange="shortTerm"))
+    return redirect(url_for("allTimeRanges"))
 
 
-
-@app.route("/display/<timeRange>", methods=["POST", "GET"])
-def allTimeRanges(timeRange):
+@app.route("/display/artists", methods=["POST", "GET"])
+def allTimeRanges():
     if request.method == "POST":
-        indicator = int(request.form["indicator"])
-        if indicator == 1:
-            timeRange = request.form["timeRange"]
-            return redirect(url_for("allTimeRanges", timeRange=timeRange))
-        else:
-            if timeRange == "shortTerm":
-                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][0], timeRange)
-            elif timeRange == "medTerm":
-                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][1], timeRange)
-            else:
-                festivo.createRecommendedPlaylist(session["spotify"], session["recc"][2], timeRange)
-            flash("Your playlist has successfully been created!")
-            return redirect(url_for("allTimeRanges", timeRange=timeRange))
+        playlistPointer = request.form["playlistPointer"]
+        festivo.createRecommendedPlaylist(session["spotify"], session[playlistPointer], playlistPointer)
+        return redirect(url_for("allTimeRanges"))
     else:
-        return render_template("display.html", term=session[timeRange], termName=timeRange)
+        return render_template("display.html", longTerm=session["allRanges"]["longTerm"], allRanges=session['allRanges'])
 
 
 '''
