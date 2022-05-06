@@ -24,7 +24,7 @@ Run app.py
 """
 
 from concurrent.futures import thread
-import os
+import os, sys
 from time import time
 from flask import Flask, session, request, redirect, render_template, url_for, flash
 from flask_session import Session
@@ -33,6 +33,7 @@ from dotenv import load_dotenv
 import spotipy
 import uuid
 import festivo_features as festivo
+import threading
 
 load_dotenv()
 
@@ -114,14 +115,27 @@ def display():
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         return redirect('/')
     spotify = spotipy.Spotify(auth_manager=auth_manager)
-    session["spotify"] = spotify
 
-    top_artists_lst, related_artists_lst = festivo.getTopAndRelatedArtists(spotify)
-    coachella_artists = festivo.readCSVFile()
-    recommended_artists_lst = festivo.generateRecommendedArtists(top_artists_lst, related_artists_lst, coachella_artists)
-    shortTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[0].items()]
-    medTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[1].items()]
-    longTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists_lst[2].items()]
+
+    def recommendedArtistsThread(sp, timeRange, index):
+        with app.test_request_context():
+            print(f'Starting {timeRange}')
+            recommended_artists[index] = festivo.getRecommendedArtists(sp, timeRange)
+            print(f'{timeRange} is finished')
+
+
+    threads = [None] * 3
+    recommended_artists = [None] * 3
+    for index, timeRange in enumerate(["short_term", "medium_term", "long_term"]):
+        threads[index] = threading.Thread(target=recommendedArtistsThread, args=(spotify, timeRange, index))
+        threads[index].start()
+
+    for index in range(len(threads)):
+        threads[index].join()
+
+    shortTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists[0].items()]
+    medTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists[1].items()]
+    longTerm = [(x.image, x.name, y, x.uri) for (x,y) in recommended_artists[2].items()]
     allRanges = {
         'shortTerm' : shortTerm,
         'medTerm' : medTerm,
