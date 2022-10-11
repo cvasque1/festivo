@@ -13,6 +13,14 @@ Flask, Python, HTML, CSS, Javascript, Heroku hosting
 I, as many people, love to listen to music and experience it live! I enjoy going to various music festivals and always tell myself that I'll listen to all the artists on a given lineup to discover new acts... but never really get around to doing it. Lineups can have more than a hundred artists so to facilitate lineup exploration, I created Festivo!
 Using Spotify's API, Festivo fetches a user's top artist data to generate a list of artists that a user might enjoy at a given festival! Not to say that this list of recommended artists will be all you need to listen to, but it's a great starting point for discovering new artists in an upcoming festival :)
 
+## Festivo Showcase:
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_home-page.gif)
+
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_recommended.gif)
+
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_recommended-2.gif)
+
+
 ## Future Implementations:
 This project is my main tool for learning new technologies, languages, frameworks, etc. As I learn more about programming, I'll add more features to Festivo.
 For now, here's what I have planned and am working on:
