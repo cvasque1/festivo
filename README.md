@@ -18,9 +18,9 @@ Using Spotify's API, Festivo fetches a user's top artist data to generate a list
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended.gif)
 
-![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended-3.gif)
-
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended-2.gif)
+
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended-3.gif)
 
 
 ## Future Implementations:
