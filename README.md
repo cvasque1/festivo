@@ -14,9 +14,11 @@ I, as many people, love to listen to music and experience it live! I enjoy going
 Using Spotify's API, Festivo fetches a user's top artist data to generate a list of artists that a user might enjoy at a given festival! Not to say that this list of recommended artists will be all you need to listen to, but it's a great starting point for discovering new artists in an upcoming festival :)
 
 ## Festivo Showcase:
-![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_home-page.gif)
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_home-page.gif)
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_recommended.gif)
+
+![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_recommended-2.gif)
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festive_recommended-2.gif)
 
