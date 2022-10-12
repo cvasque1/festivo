@@ -1,4 +1,4 @@
-*NOTE: This app is currently under development and still needs to gain production approval from Spotify for it to be accessible to anyone not given direct access by me.
+*NOTE: This app is currently under development and still needs to gain production approval from Spotify for it to be accessible to anyone not given direct access by me. Scroll down to the Festivo Showcase to preview the features.
 https://festivo.herokuapp.com/*
 
 # Festivo
@@ -15,17 +15,28 @@ Using Spotify's API, Festivo fetches a user's top artist data to generate a list
 
 ## Festivo Showcase:
 
+<p align="center">Login using Spotify and select a festival to get artist recommendations performing at that festival based on your most listened-to artists:</p>
+
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_home-page.gif)
-(Login using Spotify and select a festival to get artist recommendations performing at that festival based on your most listened-to artists)
+<br /> <br /> <br />
+
+
+<p align="center">Explore recommendations based on your most listened-to artists from the past month, 6 months, and since the start of your Spotify account:</p>
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended.gif)
-(Explore recommendations based on your most listened-to artists from the past month, 6 months, and since the start of your Spotify account)
+<br /> <br /> <br />
+
+
+<p align="center">Quickly explore your recommended artists through Spotify by clicking on an artist card:</p>
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended-2.gif)
-(Quickly explore your recommended artists through Spotify by clicking on an artist card)
+<br /> <br /> <br />
+
+
+<p align="center">Create a playlist using the top tracks of all your recommended artists:</p>
 
 ![](https://github.com/cvasque1/festivo/blob/master/festivo_gifs/festivo_recommended-3.gif)
-(Create a playlist using the top tracks of all your recommended artists)
+
 
 
 ## Future Implementations:
